@@ -17,6 +17,13 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: pip install -r requirements.txt
-
       - name: Run weather script
         run: python weather.py
+      - name: Commit updated data
+        run: |
+          git config user.name "Weather Agent"
+          git config user.email "actions@github.com"
+          git add forecast_weather.csv historical_weather.csv
+          git commit -m "Update weather data $(date +'%Y-%m-%d')" || echo "No changes to commit"
+          git push
+          
